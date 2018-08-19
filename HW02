@@ -1,0 +1,96 @@
+#include <stdio.h>
+#define ADD 1
+#define DEL 2
+#define SHOW 3
+#define END 4
+#define TRUE 5
+#define FALSE 0
+#define SIZE 5
+
+int stack[SIZE];
+int top = -1;
+
+int menu() {
+	int n;
+
+	printf("<Menu>\n");
+	printf("1) Add a element\n");
+	printf("2) Delete a element\n");
+	printf("3) Show the list\n");
+	printf("4) 종료\n\n");
+	printf("메뉴를 선택하세요: ");
+	scanf("%d", &n);
+	printf("\n");
+
+	return n;
+}
+
+void add_element() {
+	int num;
+
+	if (stack_full() == TRUE)
+		printf("stack이 모두 채워져있습니다!\n\n");
+	else if (stack_full() == FALSE) {
+		printf("넣을 원소를 입력해주세요: ");
+		scanf("%d", &num);
+		top++;
+		stack[top] = num;
+		printf("원소 %d를 넣었습니다.\n\n", num);
+	}
+	return;
+}
+
+int stack_full() {
+	if (top == SIZE - 1)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+void delete_element() {
+	if (stack_empty() == TRUE)
+		printf("stack이 비워져있습니다!\n\n");
+	else if (stack_empty() == FALSE) {
+		printf("지워진 원소는 %d입니다.\n\n", stack[top]);
+		top--;
+	}
+	return;
+}
+
+int stack_empty() {
+	if (top == -1)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+void show_list() {
+	int i;
+
+	if (stack_empty() == TRUE)
+		printf("stack이 비워져있습니다!\n\n");
+	else if (stack_empty() == FALSE)
+		for (i = 0; i <= top; i++)
+			printf("%d번째 원소는 %d입니다.\n", i + 1, stack[i]);
+	printf("\n");
+	return;
+}
+
+int main() {
+	int m;
+
+	do {
+		m = menu();
+
+		if (m == ADD)
+			add_element();
+		else if (m == DEL)
+			delete_element();
+		else if (m == SHOW)
+			show_list();
+		else if (m == END)
+			printf("프로그램을 종료합니다!\n");
+	} while (m != END);
+
+	return 0;
+}
